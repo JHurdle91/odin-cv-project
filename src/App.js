@@ -7,6 +7,10 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <label class="switch">edit
+          <input type="checkbox" />
+          <span class="slider round"></span>
+        </label>
         <Bio />
         <Education />
         <Experience />
