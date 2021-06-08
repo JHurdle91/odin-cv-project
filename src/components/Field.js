@@ -1,27 +1,29 @@
 import React from "react";
 
 class Field extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
-    this.state = {
-      text: '',
-    };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange = (e) => {
-    this.setState({
-      text: e.target.value,
-    });
+    const { name, value } = e.target;
+    this.props.onTextChange(name, value);
   }
 
   render() {
+    const { field, name } = this.props;
+    const { placeholder, id, text } = field;
+
     return(
       <div className="Field">
         <input
           type="text"
-          id={this.props.id}
-          placeholder={this.props.placeholder}
+          placeholder={placeholder}
+          id={id}
+          name={name}
+          value={text}
           onChange={this.handleChange}
         />
       </div>

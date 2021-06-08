@@ -5,17 +5,12 @@ import uniqid from "uniqid";
 import Header from "./components/Header";
 import BioEditor from "./components/Bio/BioEditor";
 import EducationEditor from "./components/Education/EducationEditor";
-import EduEditorTemp from "./components/Education/EduEditorTemp";
 import ExperienceEditor from "./components/Experience/ExperienceEditor";
 
 import "./styles/App.css";
 
 class App extends React.Component {
   /* TODO:
-   *  - add function to Delete button in EduEditorTemp
-   *    - do this BEFORE updating ExperienceEditor section
-   *
-   *  - replace EducationEditor with EduEditorTemp
    *  - make ExperienceEditor like EduEditor
    *    - or make EduEditor Generic (preferably)
    *  - make preview mode
@@ -31,6 +26,36 @@ class App extends React.Component {
 
     this.state = {
       mode: 'edit',
+      bio: {
+        id: uniqid(),
+        fields: {
+          name: {
+            text: '',
+            placeholder: 'Name',
+            id: uniqid(),
+          },
+          title: {
+            text: '',
+            placeholder: 'Title',
+            id: uniqid(),
+          },
+          city: {
+            text: '',
+            placeholder: 'City',
+            id: uniqid(),
+          },
+          email: {
+            text: '',
+            placeholder: 'Email Address',
+            id: uniqid(),
+          },
+          phone: {
+            text: '',
+            placeholder: 'Phone Number',
+            id: uniqid(),
+          },
+        },
+      },
       degrees: [],
       degree: {
         id: uniqid(),
@@ -54,7 +79,8 @@ class App extends React.Component {
       },
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeBio = this.handleChangeBio.bind(this);
+    this.handleChangeDegree = this.handleChangeDegree.bind(this);
     this.deleteDegree = this.deleteDegree.bind(this);
     this.addDegree = this.addDegree.bind(this);
   }
@@ -88,15 +114,28 @@ class App extends React.Component {
     });
   };
 
-  handleChange = (name, value, id) => {
+  handleChangeBio = (name, value) => {
+    const obj = this.state;
+    const { bio } = obj;
+    Object.entries(bio.fields).map(entry => {
+      const [key, field] = entry;
+      if (key === name) {
+        field.text = value;
+      }
+      return entry;
+    });
+    this.setState(obj);
+  };
+
+  handleChangeDegree = (name, value, id) => {
     const { degrees } = this.state;
     this.setState({
       degrees: degrees.map(degree => {
-                 if (degree.id === id) {
-                   degree.fields[name].text = value;
-                 }
-                 return degree;
-               }),
+        if (degree.id === id) {
+          degree.fields[name].text = value;
+        }
+        return degree;
+      }),
     });
   };
 
@@ -117,16 +156,18 @@ class App extends React.Component {
     if(this.state.mode === 'edit') {
       return (
         <div className="App">
-          <EduEditorTemp
+          <BioEditor
+            bio={this.state.bio}
+            onTextChange={this.handleChangeBio}
+          />
+          <EducationEditor
             degrees={this.state.degrees}
             onAddDegree={this.addDegree}
-            onTextChange={this.handleChange}
+            onTextChange={this.handleChangeDegree}
             onDeleteDegree={this.deleteDegree}
           />
           {/*
           <Header />
-          <BioEditor />
-          <EducationEditor />
           <ExperienceEditor />
           */}
         </div>
