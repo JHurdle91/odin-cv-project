@@ -5,12 +5,12 @@ import Job from "./Job";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
-const iconPlus = <FontAwesomeIcon icon={faPlus} />
+const iconPlus = <FontAwesomeIcon icon={faPlus} />;
 
-class Experience extends React.Component {
+class ExperienceEditor extends React.Component {
   render() {
     return(
-      <div className="Experience">
+      <div className="ExperienceEditor">
         <h2>Experience</h2>
         <Job />
         <button>{iconPlus}</button>
@@ -19,4 +19,4 @@ class Experience extends React.Component {
   };
 }
 
-export default Experience;
+export default ExperienceEditor;

@@ -1,6 +1,6 @@
 import React from "react";
 
-import Field from "./Field";
+import Field from "../Field";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
@@ -8,6 +8,14 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 const iconDelete = <FontAwesomeIcon icon={faTrash} />
 
 class Degree extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.addDegree = this.addDegree.bind(this);
+  }
+
+
   render() {
     return(
       <form className="Degree">

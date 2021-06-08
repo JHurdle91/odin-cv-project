@@ -1,10 +1,11 @@
 import React from "react";
-import Field from "./Field";
 
-class Bio extends React.Component {
+import Field from "../Field";
+
+class BioEditor extends React.Component {
   render() {
     return(
-      <div className="Bio">
+      <div className="BioEditor">
         <h2>Personal Information</h2>
         <form>
           <Field
@@ -33,4 +34,4 @@ class Bio extends React.Component {
   };
 }
 
-export default Bio;
+export default BioEditor;

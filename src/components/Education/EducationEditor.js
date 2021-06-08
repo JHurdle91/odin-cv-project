@@ -5,12 +5,18 @@ import Degree from "./Degree";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
-const iconPlus = <FontAwesomeIcon icon={faPlus} />
+const iconPlus = <FontAwesomeIcon icon={faPlus} />;
 
-class Education extends React.Component {
+class EducationEditor extends React.Component {
+  constructor() {
+    super();
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
   render() {
     return(
-      <div className="Education">
+      <div className="EducationEditor">
         <h2>Education</h2>
         <Degree />
         <button>{iconPlus}</button>
@@ -19,4 +25,4 @@ class Education extends React.Component {
   };
 }
 
-export default Education;
+export default EducationEditor;

@@ -5,8 +5,14 @@ class Field extends React.Component {
     super(props);
 
     this.state = {
-      text: ''
+      text: '',
     };
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      text: e.target.value,
+    });
   }
 
   render() {
@@ -16,8 +22,8 @@ class Field extends React.Component {
           type="text"
           id={this.props.id}
           placeholder={this.props.placeholder}
+          onChange={this.handleChange}
         />
-        {/* (TODO: add to <input>) onChange={this.handleChange} */}
       </div>
     );
   };
