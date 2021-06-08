@@ -2,7 +2,6 @@ import React from "react";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import uniqid from "uniqid";
 
 import DegreeTemp from "./DegreeTemp";
 
@@ -13,6 +12,7 @@ class EduEditorTemp extends React.Component {
     super();
 
     this.handleChange = this.handleChange.bind(this);
+    this.deleteDegree = this.deleteDegree.bind(this);
     this.addDegree = this.addDegree.bind(this);
   }
 
@@ -25,24 +25,29 @@ class EduEditorTemp extends React.Component {
     this.props.onAddDegree();
   };
 
+  deleteDegree = (id) => {
+    this.props.onDeleteDegree(id);
+  }
+
   render() {
     const { degrees } = this.props;
 
     return(
       <div className="EducationEditor">
         <h2>Education</h2>
-        <form onSubmit={this.addDegree}>
-          {degrees.map((degree) => {
+        {
+          degrees.map((degree) => {
             return(
               <DegreeTemp
                 degree={degree}
                 key={degree.id.toString()}
                 onTextChange={this.handleChange}
+                onDeleteDegree={this.deleteDegree}
               />
             );
-          })}
-          <button type="submit">{iconPlus}</button>
-        </form>
+          })
+        }
+        <button onClick={this.addDegree}>{iconPlus}</button>
       </div>
     );
   };

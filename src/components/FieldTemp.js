@@ -1,7 +1,5 @@
 import React from "react";
 
-import uniqid from "uniqid";
-
 class FieldTemp extends React.Component {
   constructor() {
     super();

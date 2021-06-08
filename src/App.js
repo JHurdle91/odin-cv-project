@@ -55,15 +55,15 @@ class App extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.deleteDegree = this.deleteDegree.bind(this);
     this.addDegree = this.addDegree.bind(this);
   }
 
   addDegree = () => {
-    const { mode, degrees, degree } = this.state;
+    const { degrees, degree } = this.state;
     const { type, university, date } = degree.fields;
 
     this.setState({
-      mode: mode,
       degrees: degrees.concat(degree),
       degree: {
         id: uniqid(),
@@ -89,15 +89,25 @@ class App extends React.Component {
   };
 
   handleChange = (name, value, id) => {
-    const obj = this.state;
-    obj.degrees.map(degree => {
-      if (degree.id === id) {
-        degree.fields[name].text = value;
-      }
-      return degree;
+    const { degrees } = this.state;
+    this.setState({
+      degrees: degrees.map(degree => {
+                 if (degree.id === id) {
+                   degree.fields[name].text = value;
+                 }
+                 return degree;
+               }),
     });
-    this.setState(obj);
   };
+
+  deleteDegree = (id) => {
+    const { degrees } = this.state;
+    this.setState({
+      degrees: degrees.filter(degree => {
+                 return degree.id !== id
+               }),
+    });
+  }
 
   componentDidMount() {
     this.addDegree();
@@ -111,6 +121,7 @@ class App extends React.Component {
             degrees={this.state.degrees}
             onAddDegree={this.addDegree}
             onTextChange={this.handleChange}
+            onDeleteDegree={this.deleteDegree}
           />
           {/*
           <Header />
