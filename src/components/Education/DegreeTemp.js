@@ -15,25 +15,23 @@ class DegreeTemp extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(e) {
-    const { onTextChange, parent } = this.props;
-    const { name, value } = e.target;
-
-    onTextChange(name, value, parent.id);
+  handleChange = (name, value) => {
+    const { onTextChange, degree } = this.props;
+    onTextChange(name, value, degree.id);
   }
 
   render() {
-    const { parent } = this.props;
+    const { degree } = this.props;
 
     return(
       <div className="DegreeTemp">
-        {Object.keys(parent.fields).map((key) => {
-          const field = parent.fields[key];
+        {Object.entries(degree.fields).map(entry => {
+          const [key, field] = entry;
 
           return(
             <FieldTemp
               name={key}
-              parent={field}
+              field={field}
               key={field.id}
               onTextChange={this.handleChange}
             />

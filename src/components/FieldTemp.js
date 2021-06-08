@@ -9,13 +9,14 @@ class FieldTemp extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(e) {
-    this.props.onTextChange(e);
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.props.onTextChange(name, value);
   }
 
   render() {
-    const { parent, name } = this.props;
-    const { placeholder, id, text } = parent;
+    const { field, name } = this.props;
+    const { placeholder, id, text } = field;
 
     return(
       <div className="FieldTemp">

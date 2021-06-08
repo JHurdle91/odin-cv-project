@@ -1,5 +1,7 @@
 import React from "react";
 
+import uniqid from "uniqid";
+
 import Header from "./components/Header";
 import BioEditor from "./components/Bio/BioEditor";
 import EducationEditor from "./components/Education/EducationEditor";
@@ -9,41 +11,97 @@ import ExperienceEditor from "./components/Experience/ExperienceEditor";
 import "./styles/App.css";
 
 class App extends React.Component {
+  /* TODO:
+   *  - add function to Delete button in EduEditorTemp
+   *    - do this BEFORE updating ExperienceEditor section
+   *
+   *  - replace EducationEditor with EduEditorTemp
+   *  - make ExperienceEditor like EduEditor
+   *    - or make EduEditor Generic (preferably)
+   *  - make preview mode
+   *    - use same state info, just different css
+   *      - maybe different componenets with diff class names
+   *  - make it look good (css)
+   *    - edit mode and
+   *    - preview mode (sidebar, see reference cv)
+   *  - print to pdf (optional)
+  */
   constructor() {
     super();
 
     this.state = {
       mode: 'edit',
       degrees: [],
+      degree: {
+        id: uniqid(),
+        fields: {
+          type: {
+            text: '',
+            placeholder: 'Degree/Certificate',
+            id: uniqid(),
+          },
+          university: {
+            text: '',
+            placeholder: 'University',
+            id: uniqid(),
+          },
+          date: {
+            text: '',
+            placeholder: 'Date completed',
+            id: uniqid(),
+          },
+        },
+      },
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.addDegree = this.addDegree.bind(this);
   }
 
-  addDegree = (id, fields) => {
+  addDegree = () => {
+    const { mode, degrees, degree } = this.state;
+    const { type, university, date } = degree.fields;
+
     this.setState({
-      degrees: this.state.degrees.concat({
-        id: id,
-        fields: fields,
-      }),
-    })
+      mode: mode,
+      degrees: degrees.concat(degree),
+      degree: {
+        id: uniqid(),
+        fields: {
+          type: {
+            text: '',
+            placeholder: type.placeholder,
+            id: uniqid(),
+          },
+          university: {
+            text: '',
+            placeholder: university.placeholder,
+            id: uniqid(),
+          },
+          date: {
+            text: '',
+            placeholder: date.placeholder,
+            id: uniqid(),
+          },
+        },
+      },
+    });
   };
 
   handleChange = (name, value, id) => {
     const obj = this.state;
-    const degrees = obj.degrees;
-    let index;
-    degrees.findIndex((degree, i) => {
+    obj.degrees.map(degree => {
       if (degree.id === id) {
-        index = i;
-        return true;
+        degree.fields[name].text = value;
       }
-      return false;
+      return degree;
     });
-    degrees[index].fields[name].text = value;
     this.setState(obj);
   };
+
+  componentDidMount() {
+    this.addDegree();
+  }
 
   render() {
     if(this.state.mode === 'edit') {
