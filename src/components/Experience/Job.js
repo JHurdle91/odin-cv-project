@@ -1,38 +1,52 @@
 import React from "react";
 
-import Field from "../Field";
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
+import Field from "../Field";
 
 const iconDelete = <FontAwesomeIcon icon={faTrash} />
 
 class Job extends React.Component {
+  constructor() {
+    super();
+
+    this.handleChange = this.handleChange.bind(this);
+    this.deleteJob = this.deleteJob.bind(this);
+  }
+
+  handleChange = (name, value) => {
+    const { onTextChange, job } = this.props;
+    onTextChange(name, value, job.id);
+  }
+
+  deleteJob = (e) => {
+    e.preventDefault();
+    const { onDeleteJob, job } = this.props;
+    onDeleteJob(job.id);
+  }
+
   render() {
+    const { job } = this.props;
+
     return(
-      <form className="Job">
-        <Field
-          id = "positionInput"
-          placeholder = "Position"
-        />
-        <Field
-          id = "companyInput"
-          placeholder = "Company"
-        />
-        <Field
-          id = "jobCityInput"
-          placeholder = "City"
-        />
-        <Field
-          id = "startDateInput"
-          placeholder = "Start Date"
-        />
-        <Field
-          id = "endDateInput"
-          placeholder = "End Date"
-        />
-        <button>{iconDelete}</button>
-      </form>
+      <div className="Job">
+        {
+          Object.entries(job.fields).map(entry => {
+            const [key, field] = entry;
+
+            return(
+              <Field
+                name={key}
+                field={field}
+                key={field.id}
+                onTextChange={this.handleChange}
+              />
+            );
+          })
+        }
+        <button onClick={this.deleteJob}>{iconDelete}</button>
+      </div>
     );
   };
 }

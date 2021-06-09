@@ -11,8 +11,7 @@ import "./styles/App.css";
 
 class App extends React.Component {
   /* TODO:
-   *  - make ExperienceEditor like EduEditor
-   *    - or make EduEditor Generic (preferably)
+   *  - make generic section to combine Education and Experience
    *  - make preview mode
    *    - use same state info, just different css
    *      - maybe different componenets with diff class names
@@ -77,12 +76,46 @@ class App extends React.Component {
           },
         },
       },
+      jobs: [],
+      job: {
+        id: uniqid(),
+        fields: {
+          position: {
+            text: '',
+            placeholder: 'Position',
+            id: uniqid(),
+          },
+          company: {
+            text: '',
+            placeholder: 'Company',
+            id: uniqid(),
+          },
+          city: {
+            text: '',
+            placeholder: 'City',
+            id: uniqid(),
+          },
+          startDate: {
+            text: '',
+            placeholder: 'Start Date',
+            id: uniqid(),
+          },
+          endDate: {
+            text: '',
+            placeholder: 'End Date',
+            id: uniqid(),
+          },
+        },
+      },
     };
 
     this.handleChangeBio = this.handleChangeBio.bind(this);
     this.handleChangeDegree = this.handleChangeDegree.bind(this);
+    this.handleChangeJob = this.handleChangeJob.bind(this);
     this.deleteDegree = this.deleteDegree.bind(this);
+    this.deleteJob = this.deleteJob.bind(this);
     this.addDegree = this.addDegree.bind(this);
+    this.addJob = this.addJob.bind(this);
   }
 
   addDegree = () => {
@@ -107,6 +140,45 @@ class App extends React.Component {
           date: {
             text: '',
             placeholder: date.placeholder,
+            id: uniqid(),
+          },
+        },
+      },
+    });
+  };
+
+  addJob = () => {
+    const { jobs, job } = this.state;
+    const { type, university, date } = job.fields;
+
+    this.setState({
+      jobs: jobs.concat(job),
+      job: {
+        id: uniqid(),
+        fields: {
+          position: {
+            text: '',
+            placeholder: 'Position',
+            id: uniqid(),
+          },
+          company: {
+            text: '',
+            placeholder: 'Company',
+            id: uniqid(),
+          },
+          city: {
+            text: '',
+            placeholder: 'City',
+            id: uniqid(),
+          },
+          startDate: {
+            text: '',
+            placeholder: 'Start Date',
+            id: uniqid(),
+          },
+          endDate: {
+            text: '',
+            placeholder: 'End Date',
             id: uniqid(),
           },
         },
@@ -139,6 +211,18 @@ class App extends React.Component {
     });
   };
 
+  handleChangeJob = (name, value, id) => {
+    const { jobs } = this.state;
+    this.setState({
+      jobs: jobs.map(job => {
+        if (job.id === id) {
+          job.fields[name].text = value;
+        }
+        return job;
+      }),
+    });
+  };
+
   deleteDegree = (id) => {
     const { degrees } = this.state;
     this.setState({
@@ -148,8 +232,18 @@ class App extends React.Component {
     });
   }
 
+  deleteJob = (id) => {
+    const { jobs } = this.state;
+    this.setState({
+      jobs: jobs.filter(job => {
+                 return job.id !== id
+               }),
+    });
+  }
+
   componentDidMount() {
     this.addDegree();
+    this.addJob();
   }
 
   render() {
@@ -166,9 +260,14 @@ class App extends React.Component {
             onTextChange={this.handleChangeDegree}
             onDeleteDegree={this.deleteDegree}
           />
+          <ExperienceEditor
+            jobs={this.state.jobs}
+            onAddJob={this.addJob}
+            onTextChange={this.handleChangeJob}
+            onDeleteJob={this.deleteJob}
+          />
           {/*
           <Header />
-          <ExperienceEditor />
           */}
         </div>
       );

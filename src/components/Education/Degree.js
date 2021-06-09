@@ -1,9 +1,9 @@
 import React from "react";
 
-import Field from "../Field";
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
+
+import Field from "../Field";
 
 const iconDelete = <FontAwesomeIcon icon={faTrash} />
 
