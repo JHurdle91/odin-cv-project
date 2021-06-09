@@ -4,14 +4,12 @@ import uniqid from "uniqid";
 
 import Header from "./components/Header";
 import BioEditor from "./components/Bio/BioEditor";
-import EducationEditor from "./components/Education/EducationEditor";
-import ExperienceEditor from "./components/Experience/ExperienceEditor";
+import HistorySection from "./components/History/HistorySection";
 
 import "./styles/App.css";
 
 class App extends React.Component {
   /* TODO:
-   *  - make generic section to combine Education and Experience
    *  - make preview mode
    *    - use same state info, just different css
    *      - maybe different componenets with diff class names
@@ -110,140 +108,63 @@ class App extends React.Component {
     };
 
     this.handleChangeBio = this.handleChangeBio.bind(this);
-    this.handleChangeDegree = this.handleChangeDegree.bind(this);
-    this.handleChangeJob = this.handleChangeJob.bind(this);
-    this.deleteDegree = this.deleteDegree.bind(this);
-    this.deleteJob = this.deleteJob.bind(this);
-    this.addDegree = this.addDegree.bind(this);
-    this.addJob = this.addJob.bind(this);
+    this.handleChangeHistory = this.handleChangeHistory.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
+    this.addItem = this.addItem.bind(this);
   }
 
-  addDegree = () => {
-    const { degrees, degree } = this.state;
-    const { type, university, date } = degree.fields;
-
+  addItem = (itemsKey) => {
+    const items = this.state[itemsKey];
+    const itemKey = itemsKey.slice(0, -1);
+    const item = this.state[itemKey];
+    const { fields } = item;
     this.setState({
-      degrees: degrees.concat(degree),
-      degree: {
+      [itemsKey]: items.concat(item),
+      [itemKey]: {
         id: uniqid(),
-        fields: {
-          type: {
-            text: '',
-            placeholder: type.placeholder,
-            id: uniqid(),
-          },
-          university: {
-            text: '',
-            placeholder: university.placeholder,
-            id: uniqid(),
-          },
-          date: {
-            text: '',
-            placeholder: date.placeholder,
-            id: uniqid(),
-          },
-        },
-      },
-    });
-  };
-
-  addJob = () => {
-    const { jobs, job } = this.state;
-    const { type, university, date } = job.fields;
-
-    this.setState({
-      jobs: jobs.concat(job),
-      job: {
-        id: uniqid(),
-        fields: {
-          position: {
-            text: '',
-            placeholder: 'Position',
-            id: uniqid(),
-          },
-          company: {
-            text: '',
-            placeholder: 'Company',
-            id: uniqid(),
-          },
-          city: {
-            text: '',
-            placeholder: 'City',
-            id: uniqid(),
-          },
-          startDate: {
-            text: '',
-            placeholder: 'Start Date',
-            id: uniqid(),
-          },
-          endDate: {
-            text: '',
-            placeholder: 'End Date',
-            id: uniqid(),
-          },
-        },
+        fields: 
+          Object.entries(fields).map(entry => {
+            const [, field] = entry;
+            return ({
+              text: '',
+              placeholder: field.placeholder,
+              id: uniqid(),
+            });
+          }),
       },
     });
   };
 
   handleChangeBio = (name, value) => {
     const obj = this.state;
-    const { bio } = obj;
-    Object.entries(bio.fields).map(entry => {
-      const [key, field] = entry;
-      if (key === name) {
-        field.text = value;
-      }
-      return entry;
-    });
+    obj.bio.fields[name].text = value;
     this.setState(obj);
   };
 
-  handleChangeDegree = (name, value, id) => {
-    const { degrees } = this.state;
+  handleChangeHistory = (name, value, id, itemsKey) => {
+    const items = this.state[itemsKey];
     this.setState({
-      degrees: degrees.map(degree => {
-        if (degree.id === id) {
-          degree.fields[name].text = value;
+      [itemsKey]: items.map(item => {
+        if (item.id === id) {
+          item.fields[name].text = value;
         }
-        return degree;
+        return item;
       }),
     });
   };
 
-  handleChangeJob = (name, value, id) => {
-    const { jobs } = this.state;
+  deleteItem = (id, itemsKey) => {
+    const items = this.state[itemsKey];
     this.setState({
-      jobs: jobs.map(job => {
-        if (job.id === id) {
-          job.fields[name].text = value;
-        }
-        return job;
+      [itemsKey]: items.filter(item => {
+        return item.id !== id
       }),
-    });
-  };
-
-  deleteDegree = (id) => {
-    const { degrees } = this.state;
-    this.setState({
-      degrees: degrees.filter(degree => {
-                 return degree.id !== id
-               }),
-    });
-  }
-
-  deleteJob = (id) => {
-    const { jobs } = this.state;
-    this.setState({
-      jobs: jobs.filter(job => {
-                 return job.id !== id
-               }),
     });
   }
 
   componentDidMount() {
-    this.addDegree();
-    this.addJob();
+    this.addItem('degrees');
+    this.addItem('jobs');
   }
 
   render() {
@@ -254,21 +175,22 @@ class App extends React.Component {
             bio={this.state.bio}
             onTextChange={this.handleChangeBio}
           />
-          <EducationEditor
-            degrees={this.state.degrees}
-            onAddDegree={this.addDegree}
-            onTextChange={this.handleChangeDegree}
-            onDeleteDegree={this.deleteDegree}
+          <HistorySection
+            items={this.state.degrees}
+            itemsKey='degrees'
+            header='Education'
+            onAddItem={this.addItem}
+            onDeleteItem={this.deleteItem}
+            onTextChange={this.handleChangeHistory}
           />
-          <ExperienceEditor
-            jobs={this.state.jobs}
-            onAddJob={this.addJob}
-            onTextChange={this.handleChangeJob}
-            onDeleteJob={this.deleteJob}
+          <HistorySection
+            items={this.state.jobs}
+            itemsKey='jobs'
+            header='Experience'
+            onAddItem={this.addItem}
+            onDeleteItem={this.deleteItem}
+            onTextChange={this.handleChangeHistory}
           />
-          {/*
-          <Header />
-          */}
         </div>
       );
     } else {

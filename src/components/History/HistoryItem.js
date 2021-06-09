@@ -7,32 +7,32 @@ import Field from "../Field";
 
 const iconDelete = <FontAwesomeIcon icon={faTrash} />
 
-class Degree extends React.Component {
+class HistoryItem extends React.Component {
   constructor() {
     super();
 
     this.handleChange = this.handleChange.bind(this);
-    this.deleteDegree = this.deleteDegree.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   handleChange = (name, value) => {
-    const { onTextChange, degree } = this.props;
-    onTextChange(name, value, degree.id);
+    const { onTextChange, item } = this.props;
+    onTextChange(name, value, item.id);
   }
 
-  deleteDegree = (e) => {
+  deleteItem = (e) => {
     e.preventDefault();
-    const { onDeleteDegree, degree } = this.props;
-    onDeleteDegree(degree.id);
+    const { onDeleteItem, item } = this.props;
+    onDeleteItem(item.id);
   }
 
   render() {
-    const { degree } = this.props;
+    const { item } = this.props;
 
     return(
-      <div className="Degree">
+      <div className="HistoryItem">
         {
-          Object.entries(degree.fields).map(entry => {
+          Object.entries(item.fields).map(entry => {
             const [key, field] = entry;
 
             return(
@@ -45,10 +45,10 @@ class Degree extends React.Component {
             );
           })
         }
-        <button onClick={this.deleteDegree}>{iconDelete}</button>
+        <button onClick={this.deleteItem}>{iconDelete}</button>
       </div>
     );
   };
 }
 
-export default Degree;
+export default HistoryItem;
