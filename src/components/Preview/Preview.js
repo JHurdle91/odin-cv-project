@@ -16,6 +16,8 @@ class Preview extends React.Component {
 
   render() {
     const { name, title, city, email, phone } = this.props.bio.fields;
+    const { degrees, jobs } = this.props;
+
     return (
       <div className="Preview">
         <CvHeader
@@ -23,16 +25,38 @@ class Preview extends React.Component {
           title={title.text}
         />
         <div className="CvMain">
-          {/* TODO:
-            - iterate through degrees and jobs
-            - only 1 <CvHistory /> section
-              - contains all degrees and jobs
-          */}
-          <CvHistory
-            city={city.text}
-            email={email.text}
-            phone={phone.text}
-          />
+          <div className="historySectionPreview">
+            <h2>Education</h2>
+            {
+              degrees.map(degree => {
+                const { type, university, date } = degree.fields;
+                return(
+                  <CvHistory
+                    title={type.text}
+                    subtitle={university.text}
+                    date={date.text}
+                    key={degree.id}
+                  />
+                );
+              })
+            }
+          </div>
+          <div className="historySectionPreview">
+            <h2>Experience</h2>
+            {
+              jobs.map(job => {
+                const { position, company, city, startDate, endDate } = job.fields;
+                return(
+                  <CvHistory
+                    title={position.text}
+                    subtitle={`${company.text}, ${city.text}`}
+                    date={`${startDate.text} - ${endDate.text}`}
+                    key={job.id}
+                  />
+                );
+              })
+            }
+          </div>
           <CvSidebar
             city={city.text}
             email={email.text}

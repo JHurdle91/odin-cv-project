@@ -1,22 +1,19 @@
 import React from "react";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import { faPhone } from '@fortawesome/free-solid-svg-icons'
 
-const CvSidebar = (props) => {
-  const iconLocation = <FontAwesomeIcon icon={faMapMarkerAlt} />;
-  const iconEnvelope = <FontAwesomeIcon icon={faEnvelope} />;
-  const iconPhone = <FontAwesomeIcon icon={faPhone} />;
-  const { city, email, phone } = props;
+const CvHistory = (props) => {
+  const { title, subtitle, date } = props;
   return (
-    <div className="CvSidebar">
-      <div>{iconLocation} {city}</div>
-      <div>{iconEnvelope} {email}</div>
-      <div>{iconPhone} {phone}</div>
+    <div className="CvHistory">
+      <div className='dateSidebar'>
+        <div>{date}</div>
+      </div>
+      <div className='historyItemPreview'>
+        <div className='historyItemTitle'>{title}</div>
+        <div className='historyItemSubtitle'>{subtitle}</div>
+      </div>
     </div>
   );
 }
 
-export default CvSidebar;
+export default CvHistory;

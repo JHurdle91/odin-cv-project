@@ -244,7 +244,7 @@ class App extends React.Component {
             id: uniqid(),
           },
           city: {
-            text: 'Atlanta',
+            text: 'New York',
             placeholder: 'City',
             id: uniqid(),
           },
@@ -309,6 +309,8 @@ class App extends React.Component {
           />
           <Preview
             bio={bio}
+            degrees={degrees}
+            jobs={jobs}
           />
         </div>
       );
