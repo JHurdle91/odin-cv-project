@@ -1,0 +1,25 @@
+.Preview {
+	border: 1px solid black;
+	margin-top: 50px;
+	width: 8.5in;
+	height: 11in;
+}
+
+.CvHeader {
+	background: #CCC;
+	padding: 20px;
+}
+
+.CvMain {
+	display: grid;
+	grid-template-columns: auto 30%;
+	height: 100%;
+}
+
+.CvHistory {
+}
+
+.CvSidebar {
+	border-left: 1px solid black;
+	padding-top:20px;
+}

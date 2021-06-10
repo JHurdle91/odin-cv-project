@@ -1,16 +1,21 @@
 import React from "react";
 
-class Header extends React.Component {
-  render() {
-    return (
-      <div className="Header">
-        <label class="switch">edit/preview
-          <input type="checkbox" />
-          <span class="slider round"></span>
-        </label> 
-      </div>
-    );
-  };
+import "../styles/Header.css";
+
+const Header = (props) => {
+  const handleChange = (e) => {
+    props.onToggle(e.target.checked);
+  }
+  
+  return (
+    <div className="Header">
+      <h4>{props.mode} mode</h4>
+      <label className="switch">
+        <input type="checkbox" onChange={handleChange} />
+        <span className="slider round"></span>
+      </label> 
+    </div>
+  );
 }
 
 export default Header;
