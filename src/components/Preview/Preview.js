@@ -16,8 +16,6 @@ class Preview extends React.Component {
   render() {
     const { name, title, city, email, phone } = this.props.bio.fields;
     const { degrees, jobs } = this.props;
-    console.log(degrees);
-    console.log(jobs);
 
     return (
       <div className="Preview">
