@@ -17,6 +17,8 @@ class Preview extends React.Component {
   render() {
     const { name, title, city, email, phone } = this.props.bio.fields;
     const { degrees, jobs } = this.props;
+    console.log(degrees);
+    console.log(jobs);
 
     return (
       <div className="Preview">
@@ -25,6 +27,7 @@ class Preview extends React.Component {
           title={title.text}
         />
         <div className="CvMain">
+          <div className="historyContainerPreview">
           <div className="historySectionPreview">
             <h2>Education</h2>
             {
@@ -56,6 +59,7 @@ class Preview extends React.Component {
                 );
               })
             }
+          </div>
           </div>
           <CvSidebar
             city={city.text}

@@ -3,23 +3,12 @@ import React from "react";
 import uniqid from "uniqid";
 
 import Header from "./components/Header";
-import BioEditor from "./components/Bio/BioEditor";
-import HistorySection from "./components/History/HistorySection";
+import Editor from "./components/Editor/Editor";
 import Preview from "./components/Preview/Preview";
 
 import "./styles/App.css";
 
 class App extends React.Component {
-  /* TODO:
-   *  - make preview mode
-   *    - use same state info, just different css
-   *      - maybe different componenets with diff class names
-   *  - move edit mode stuff into sub component like preview
-   *  - make it look good (css)
-   *    - edit mode and
-   *    - preview mode (sidebar, see reference cv)
-   *  - print to pdf (optional)
-  */
   constructor() {
     super();
 
@@ -117,26 +106,82 @@ class App extends React.Component {
   }
 
   addItem = (itemsKey) => {
-    const items = this.state[itemsKey];
     const itemKey = itemsKey.slice(0, -1);
     const item = this.state[itemKey];
-    const { fields } = item;
+    const items = this.state[itemsKey];
+
     this.setState({
       [itemsKey]: items.concat(item),
-      [itemKey]: {
+    });
+
+    if (itemKey === 'degree') {
+      this.resetDegree();
+    } else {
+      this.resetJob();
+    }
+  };
+
+  resetDegree = () => {
+    const { type, university, date } = this.state.degree.fields;
+    this.setState({
+      degree: {
         id: uniqid(),
-        fields: 
-          Object.entries(fields).map(entry => {
-            const [, field] = entry;
-            return ({
-              text: '',
-              placeholder: field.placeholder,
-              id: uniqid(),
-            });
-          }),
+        fields: {
+          type: {
+            text: '',
+            placeholder: type.placeholder,
+            id: uniqid(),
+          },
+          university: {
+            text: '',
+            placeholder: university.placeholder,
+            id: uniqid(),
+          },
+          date: {
+            text: '',
+            placeholder: date.placeholder,
+            id: uniqid(),
+          },
+        },
       },
     });
-  };
+  }
+
+  resetJob = () => {
+    const { position, company, city, startDate, endDate } = this.state.job.fields;
+    this.setState({
+      job: {
+        id: uniqid(),
+        fields: {
+          position: {
+            text: '',
+            placeholder: position.placeholder,
+            id: uniqid(),
+          },
+          company: {
+            text: '',
+            placeholder: company.placeholder,
+            id: uniqid(),
+          },
+          city: {
+            text: '',
+            placeholder: city.placeholder,
+            id: uniqid(),
+          },
+          startDate: {
+            text: '',
+            placeholder: startDate.placeholder,
+            id: uniqid(),
+          },
+          endDate: {
+            text: '',
+            placeholder: endDate.placeholder,
+            id: uniqid(),
+          },
+        },
+      },
+    });
+  }
 
   handleChangeBio = (name, value) => {
     const obj = this.state;
@@ -210,56 +255,110 @@ class App extends React.Component {
           },
         },
       },
-      degrees: [{
-        id: uniqid(),
-        fields: {
-          type: {
-            text: "BS Mechanical Engineering",
-            placeholder: 'Degree/Certificate',
-            id: uniqid(),
-          },
-          university: {
-            text: 'Georgia Institute of Technology',
-            placeholder: 'University',
-            id: uniqid(),
-          },
-          date: {
-            text: '2010',
-            placeholder: 'Date completed',
-            id: uniqid(),
-          },
-        },
-      }],
-      jobs: [{
-        id: uniqid(),
-        fields: {
-          position: {
-            text: 'Senior Mechanical Engineer',
-            placeholder: 'Position',
-            id: uniqid(),
-          },
-          company: {
-            text: 'Lockheed Martin',
-            placeholder: 'Company',
-            id: uniqid(),
-          },
-          city: {
-            text: 'New York',
-            placeholder: 'City',
-            id: uniqid(),
-          },
-          startDate: {
-            text: 'Jan 2005',
-            placeholder: 'Start Date',
-            id: uniqid(),
-          },
-          endDate: {
-            text: 'Present',
-            placeholder: 'End Date',
-            id: uniqid(),
+      degrees: [
+        {
+          id: uniqid(),
+          fields: {
+            type: {
+              text: "BS Mechanical Engineering 1",
+              placeholder: 'Degree/Certificate',
+              id: uniqid(),
+            },
+            university: {
+              text: 'Georgia Institute of Technology',
+              placeholder: 'University',
+              id: uniqid(),
+            },
+            date: {
+              text: '2010',
+              placeholder: 'Date completed',
+              id: uniqid(),
+            },
           },
         },
-      }],
+        {
+          id: uniqid(),
+          fields: {
+            type: {
+              text: "BS Mechanical Engineering 2",
+              placeholder: 'Degree/Certificate',
+              id: uniqid(),
+            },
+            university: {
+              text: 'Georgia Institute of Technology',
+              placeholder: 'University',
+              id: uniqid(),
+            },
+            date: {
+              text: '2010',
+              placeholder: 'Date completed',
+              id: uniqid(),
+            },
+          },
+        },
+      ],
+      jobs: [
+        {
+          id: uniqid(),
+          fields: {
+            position: {
+              text: 'Senior Mechanical Engineer 1',
+              placeholder: 'Position',
+              id: uniqid(),
+            },
+            company: {
+              text: 'Lockheed Martin',
+              placeholder: 'Company',
+              id: uniqid(),
+            },
+            city: {
+              text: 'New York',
+              placeholder: 'City',
+              id: uniqid(),
+            },
+            startDate: {
+              text: 'Jan 2005',
+              placeholder: 'Start Date',
+              id: uniqid(),
+            },
+            endDate: {
+              text: 'Present',
+              placeholder: 'End Date',
+              id: uniqid(),
+            },
+          },
+        },
+        {
+          id: uniqid(),
+          fields: {
+            position: {
+              text: 'Senior Mechanical Engineer 2',
+              placeholder: 'Position',
+              id: uniqid(),
+            },
+            company: {
+              text: 'Lockheed Martin',
+              placeholder: 'Company',
+              id: uniqid(),
+            },
+            city: {
+              text: 'New York',
+              placeholder: 'City',
+              id: uniqid(),
+            },
+            startDate: {
+              text: 'Jan 2005',
+              placeholder: 'Start Date',
+              id: uniqid(),
+            },
+            endDate: {
+              text: 'Present',
+              placeholder: 'End Date',
+              id: uniqid(),
+            },
+          },
+        },
+      ],
     });
   }
 
@@ -278,25 +377,14 @@ class App extends React.Component {
             mode={mode}
             onToggle={this.toggleMode}
           />
-          <BioEditor
+          <Editor
             bio={bio}
-            onTextChange={this.handleChangeBio}
-          />
-          <HistorySection
-            items={degrees}
-            itemsKey='degrees'
-            header='Education'
+            degrees={degrees}
+            jobs={jobs}
             onAddItem={this.addItem}
             onDeleteItem={this.deleteItem}
-            onTextChange={this.handleChangeHistory}
-          />
-          <HistorySection
-            items={jobs}
-            itemsKey='jobs'
-            header='Experience'
-            onAddItem={this.addItem}
-            onDeleteItem={this.deleteItem}
-            onTextChange={this.handleChangeHistory}
+            onTextChangeBio={this.handleChangeBio}
+            onTextChangeHistory={this.handleChangeHistory}
           />
         </div>
       );

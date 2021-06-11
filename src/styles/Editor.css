@@ -1,0 +1,37 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+.Editor {
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+}
+
+h2 {
+	margin-top: 20px;
+}
+
+.HistorySection {
+	display: flex;
+	flex-direction: column;
+}
+
+.HistoryItem {
+	display: flex;
+	flex-direction: column;
+}
+
+.HistorySection button {
+	margin-top: -10px;
+}
+
+.HistoryItem button {
+	margin: 2px 0 12px 0;
+}
+
+.Field input{
+	width: 300px;
+	margin: 2px;
+}
