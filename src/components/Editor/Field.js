@@ -10,13 +10,13 @@ class Field extends React.Component {
   handleChange = (e) => {
     const { name, value } = e.target;
     this.props.onTextChange(name, value);
-  }
+  };
 
   render() {
     const { field, name } = this.props;
     const { placeholder, id, text } = field;
 
-    return(
+    return (
       <div className="Field">
         <input
           type="text"
@@ -28,7 +28,7 @@ class Field extends React.Component {
         />
       </div>
     );
-  };
+  }
 }
 
 export default Field;

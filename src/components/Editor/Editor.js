@@ -17,40 +17,37 @@ class Editor extends React.Component {
 
   addItem = (itemsKey) => {
     this.props.onAddItem(itemsKey);
-  }
+  };
 
   deleteItem = (id, itemsKey) => {
     this.props.onDeleteItem(id, itemsKey);
-  }
-  
+  };
+
   handleChangeBio = (name, value) => {
     this.props.onTextChangeBio(name, value);
   };
 
   handleChangeHistory = (name, value, id, itemsKey) => {
     this.props.onTextChangeHistory(name, value, id, itemsKey);
-  }
+  };
 
   render() {
     const { bio, degrees, jobs } = this.props;
     return (
       <div className="Editor">
-        <BioEditor
-          bio={bio}
-          onTextChange={this.handleChangeBio}
-        />
+        <BioEditor bio={bio} onTextChange={this.handleChangeBio} />
         <HistorySection
           items={degrees}
-          itemsKey='degrees'
-          header='Education'
+          itemsKey="degrees"
+          header="Education"
           onAddItem={this.addItem}
           onDeleteItem={this.deleteItem}
           onTextChange={this.handleChangeHistory}
         />
         <HistorySection
           items={jobs}
-          itemsKey='jobs'
-          header='Experience'
+          itemsKey="jobs"
+          header="Experience"
           onAddItem={this.addItem}
           onDeleteItem={this.deleteItem}
           onTextChange={this.handleChangeHistory}

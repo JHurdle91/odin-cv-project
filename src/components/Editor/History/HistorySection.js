@@ -1,7 +1,7 @@
 import React from "react";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import HistoryItem from "./HistoryItem";
 
@@ -30,30 +30,28 @@ class HistorySection extends React.Component {
   deleteItem = (id) => {
     const { itemsKey, onDeleteItem } = this.props;
     onDeleteItem(id, itemsKey);
-  }
+  };
 
   render() {
     const { items, header } = this.props;
 
-    return(
+    return (
       <div className="HistorySection">
         <h2>{header}</h2>
-        {
-          items.map((item) => {
-            return(
-              <HistoryItem
-                item={item}
-                key={item.id.toString()}
-                onTextChange={this.handleChange}
-                onDeleteItem={this.deleteItem}
-              />
-            );
-          })
-        }
+        {items.map((item) => {
+          return (
+            <HistoryItem
+              item={item}
+              key={item.id.toString()}
+              onTextChange={this.handleChange}
+              onDeleteItem={this.deleteItem}
+            />
+          );
+        })}
         <button onClick={this.addItem}>{iconPlus}</button>
       </div>
     );
-  };
+  }
 }
 
 export default HistorySection;

@@ -10,8 +10,7 @@ class Preview extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-    };
+    this.state = {};
   }
 
   render() {
@@ -22,18 +21,14 @@ class Preview extends React.Component {
 
     return (
       <div className="Preview">
-        <CvHeader
-          name={name.text}
-          title={title.text}
-        />
+        <CvHeader name={name.text} title={title.text} />
         <div className="CvMain">
           <div className="historyContainerPreview">
-          <div className="historySectionPreview">
-            <h2>Education</h2>
-            {
-              degrees.map(degree => {
+            <div className="historySectionPreview">
+              <h2>Education</h2>
+              {degrees.map((degree) => {
                 const { type, university, date } = degree.fields;
-                return(
+                return (
                   <CvHistory
                     title={type.text}
                     subtitle={university.text}
@@ -41,15 +36,14 @@ class Preview extends React.Component {
                     key={degree.id}
                   />
                 );
-              })
-            }
-          </div>
-          <div className="historySectionPreview">
-            <h2>Experience</h2>
-            {
-              jobs.map(job => {
-                const { position, company, city, startDate, endDate } = job.fields;
-                return(
+              })}
+            </div>
+            <div className="historySectionPreview">
+              <h2>Experience</h2>
+              {jobs.map((job) => {
+                const { position, company, city, startDate, endDate } =
+                  job.fields;
+                return (
                   <CvHistory
                     title={position.text}
                     subtitle={`${company.text}, ${city.text}`}
@@ -57,15 +51,10 @@ class Preview extends React.Component {
                     key={job.id}
                   />
                 );
-              })
-            }
+              })}
+            </div>
           </div>
-          </div>
-          <CvSidebar
-            city={city.text}
-            email={email.text}
-            phone={phone.text}
-          />
+          <CvSidebar city={city.text} email={email.text} phone={phone.text} />
         </div>
       </div>
     );

@@ -16,26 +16,24 @@ class BioEditor extends React.Component {
   render() {
     const { bio } = this.props;
 
-    return(
+    return (
       <div className="BioEditor">
         <h2>Personal Information</h2>
-        {
-          Object.entries(bio.fields).map(entry => {
-            const [key, field] = entry;
+        {Object.entries(bio.fields).map((entry) => {
+          const [key, field] = entry;
 
-            return(
-              <Field
-                name={key}
-                field={field}
-                key={field.id}
-                onTextChange={this.handleChange}
-              />
-            );
-          })
-        }
+          return (
+            <Field
+              name={key}
+              field={field}
+              key={field.id}
+              onTextChange={this.handleChange}
+            />
+          );
+        })}
       </div>
     );
-  };
+  }
 }
 
 export default BioEditor;

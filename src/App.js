@@ -13,33 +13,33 @@ class App extends React.Component {
     super();
 
     this.state = {
-      mode: 'edit',
+      mode: "edit",
       bio: {
         id: uniqid(),
         fields: {
           name: {
-            text: '',
-            placeholder: 'Name',
+            text: "",
+            placeholder: "Name",
             id: uniqid(),
           },
           title: {
-            text: '',
-            placeholder: 'Title',
+            text: "",
+            placeholder: "Title",
             id: uniqid(),
           },
           city: {
-            text: '',
-            placeholder: 'City',
+            text: "",
+            placeholder: "City",
             id: uniqid(),
           },
           email: {
-            text: '',
-            placeholder: 'Email Address',
+            text: "",
+            placeholder: "Email Address",
             id: uniqid(),
           },
           phone: {
-            text: '',
-            placeholder: 'Phone Number',
+            text: "",
+            placeholder: "Phone Number",
             id: uniqid(),
           },
         },
@@ -49,18 +49,18 @@ class App extends React.Component {
         id: uniqid(),
         fields: {
           type: {
-            text: '',
-            placeholder: 'Degree/Certificate',
+            text: "",
+            placeholder: "Degree/Certificate",
             id: uniqid(),
           },
           university: {
-            text: '',
-            placeholder: 'University',
+            text: "",
+            placeholder: "University",
             id: uniqid(),
           },
           date: {
-            text: '',
-            placeholder: 'Date completed',
+            text: "",
+            placeholder: "Date completed",
             id: uniqid(),
           },
         },
@@ -70,28 +70,28 @@ class App extends React.Component {
         id: uniqid(),
         fields: {
           position: {
-            text: '',
-            placeholder: 'Position',
+            text: "",
+            placeholder: "Position",
             id: uniqid(),
           },
           company: {
-            text: '',
-            placeholder: 'Company',
+            text: "",
+            placeholder: "Company",
             id: uniqid(),
           },
           city: {
-            text: '',
-            placeholder: 'City',
+            text: "",
+            placeholder: "City",
             id: uniqid(),
           },
           startDate: {
-            text: '',
-            placeholder: 'Start Date',
+            text: "",
+            placeholder: "Start Date",
             id: uniqid(),
           },
           endDate: {
-            text: '',
-            placeholder: 'End Date',
+            text: "",
+            placeholder: "End Date",
             id: uniqid(),
           },
         },
@@ -114,7 +114,7 @@ class App extends React.Component {
       [itemsKey]: items.concat(item),
     });
 
-    if (itemKey === 'degree') {
+    if (itemKey === "degree") {
       this.resetDegree();
     } else {
       this.resetJob();
@@ -128,60 +128,61 @@ class App extends React.Component {
         id: uniqid(),
         fields: {
           type: {
-            text: '',
+            text: "",
             placeholder: type.placeholder,
             id: uniqid(),
           },
           university: {
-            text: '',
+            text: "",
             placeholder: university.placeholder,
             id: uniqid(),
           },
           date: {
-            text: '',
+            text: "",
             placeholder: date.placeholder,
             id: uniqid(),
           },
         },
       },
     });
-  }
+  };
 
   resetJob = () => {
-    const { position, company, city, startDate, endDate } = this.state.job.fields;
+    const { position, company, city, startDate, endDate } =
+      this.state.job.fields;
     this.setState({
       job: {
         id: uniqid(),
         fields: {
           position: {
-            text: '',
+            text: "",
             placeholder: position.placeholder,
             id: uniqid(),
           },
           company: {
-            text: '',
+            text: "",
             placeholder: company.placeholder,
             id: uniqid(),
           },
           city: {
-            text: '',
+            text: "",
             placeholder: city.placeholder,
             id: uniqid(),
           },
           startDate: {
-            text: '',
+            text: "",
             placeholder: startDate.placeholder,
             id: uniqid(),
           },
           endDate: {
-            text: '',
+            text: "",
             placeholder: endDate.placeholder,
             id: uniqid(),
           },
         },
       },
     });
-  }
+  };
 
   handleChangeBio = (name, value) => {
     const obj = this.state;
@@ -192,7 +193,7 @@ class App extends React.Component {
   handleChangeHistory = (name, value, id, itemsKey) => {
     const items = this.state[itemsKey];
     this.setState({
-      [itemsKey]: items.map(item => {
+      [itemsKey]: items.map((item) => {
         if (item.id === id) {
           item.fields[name].text = value;
         }
@@ -204,53 +205,53 @@ class App extends React.Component {
   deleteItem = (id, itemsKey) => {
     const items = this.state[itemsKey];
     this.setState({
-      [itemsKey]: items.filter(item => {
-        return item.id !== id
+      [itemsKey]: items.filter((item) => {
+        return item.id !== id;
       }),
     });
-  }
+  };
 
   toggleMode = (checked) => {
     if (checked) {
       this.setState({
-        mode: 'preview',
+        mode: "preview",
       });
     } else {
       this.setState({
-        mode: 'edit',
+        mode: "edit",
       });
     }
-  }
+  };
 
   exampleCv = () => {
     this.setState({
-      mode: 'edit',
+      mode: "edit",
       bio: {
         id: uniqid(),
         fields: {
           name: {
-            text: 'George P. Burdell',
-            placeholder: 'Name',
+            text: "George P. Burdell",
+            placeholder: "Name",
             id: uniqid(),
           },
           title: {
-            text: 'Mechanical Engineer',
-            placeholder: 'Title',
+            text: "Mechanical Engineer",
+            placeholder: "Title",
             id: uniqid(),
           },
           city: {
-            text: 'Atlanta',
-            placeholder: 'City',
+            text: "Atlanta",
+            placeholder: "City",
             id: uniqid(),
           },
           email: {
-            text: 'GBurdell@gmail.com',
-            placeholder: 'Email Address',
+            text: "GBurdell@gmail.com",
+            placeholder: "Email Address",
             id: uniqid(),
           },
           phone: {
-            text: '404.955.2049',
-            placeholder: 'Phone Number',
+            text: "404.955.2049",
+            placeholder: "Phone Number",
             id: uniqid(),
           },
         },
@@ -261,17 +262,17 @@ class App extends React.Component {
           fields: {
             type: {
               text: "BS Mechanical Engineering 1",
-              placeholder: 'Degree/Certificate',
+              placeholder: "Degree/Certificate",
               id: uniqid(),
             },
             university: {
-              text: 'Georgia Institute of Technology',
-              placeholder: 'University',
+              text: "Georgia Institute of Technology",
+              placeholder: "University",
               id: uniqid(),
             },
             date: {
-              text: '2010',
-              placeholder: 'Date completed',
+              text: "2010",
+              placeholder: "Date completed",
               id: uniqid(),
             },
           },
@@ -281,17 +282,17 @@ class App extends React.Component {
           fields: {
             type: {
               text: "BS Mechanical Engineering 2",
-              placeholder: 'Degree/Certificate',
+              placeholder: "Degree/Certificate",
               id: uniqid(),
             },
             university: {
-              text: 'Georgia Institute of Technology',
-              placeholder: 'University',
+              text: "Georgia Institute of Technology",
+              placeholder: "University",
               id: uniqid(),
             },
             date: {
-              text: '2010',
-              placeholder: 'Date completed',
+              text: "2010",
+              placeholder: "Date completed",
               id: uniqid(),
             },
           },
@@ -302,28 +303,28 @@ class App extends React.Component {
           id: uniqid(),
           fields: {
             position: {
-              text: 'Senior Mechanical Engineer 1',
-              placeholder: 'Position',
+              text: "Senior Mechanical Engineer 1",
+              placeholder: "Position",
               id: uniqid(),
             },
             company: {
-              text: 'Lockheed Martin',
-              placeholder: 'Company',
+              text: "Lockheed Martin",
+              placeholder: "Company",
               id: uniqid(),
             },
             city: {
-              text: 'New York',
-              placeholder: 'City',
+              text: "New York",
+              placeholder: "City",
               id: uniqid(),
             },
             startDate: {
-              text: 'Jan 2005',
-              placeholder: 'Start Date',
+              text: "Jan 2005",
+              placeholder: "Start Date",
               id: uniqid(),
             },
             endDate: {
-              text: 'Present',
-              placeholder: 'End Date',
+              text: "Present",
+              placeholder: "End Date",
               id: uniqid(),
             },
           },
@@ -332,51 +333,48 @@ class App extends React.Component {
           id: uniqid(),
           fields: {
             position: {
-              text: 'Senior Mechanical Engineer 2',
-              placeholder: 'Position',
+              text: "Senior Mechanical Engineer 2",
+              placeholder: "Position",
               id: uniqid(),
             },
             company: {
-              text: 'Lockheed Martin',
-              placeholder: 'Company',
+              text: "Lockheed Martin",
+              placeholder: "Company",
               id: uniqid(),
             },
             city: {
-              text: 'New York',
-              placeholder: 'City',
+              text: "New York",
+              placeholder: "City",
               id: uniqid(),
             },
             startDate: {
-              text: 'Jan 2005',
-              placeholder: 'Start Date',
+              text: "Jan 2005",
+              placeholder: "Start Date",
               id: uniqid(),
             },
             endDate: {
-              text: 'Present',
-              placeholder: 'End Date',
+              text: "Present",
+              placeholder: "End Date",
               id: uniqid(),
             },
           },
         },
       ],
     });
-  }
+  };
 
   componentDidMount() {
-    this.addItem('degrees');
-    this.addItem('jobs');
+    this.addItem("degrees");
+    this.addItem("jobs");
     this.exampleCv();
   }
 
   render() {
     const { mode, bio, degrees, jobs } = this.state;
-    if(this.state.mode === 'edit') {
+    if (this.state.mode === "edit") {
       return (
         <div className="App">
-          <Header
-            mode={mode}
-            onToggle={this.toggleMode}
-          />
+          <Header mode={mode} onToggle={this.toggleMode} />
           <Editor
             bio={bio}
             degrees={degrees}
@@ -391,19 +389,12 @@ class App extends React.Component {
     } else {
       return (
         <div className="App">
-          <Header
-            mode={mode}
-            onToggle={this.toggleMode}
-          />
-          <Preview
-            bio={bio}
-            degrees={degrees}
-            jobs={jobs}
-          />
+          <Header mode={mode} onToggle={this.toggleMode} />
+          <Preview bio={bio} degrees={degrees} jobs={jobs} />
         </div>
       );
     }
-  };
+  }
 }
 
 export default App;
