@@ -2,7 +2,7 @@
   "name": "cv-project",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://jhurdle91.github.io/odin-cv-project/",
+  "homepage": "http://jhurdle91.github.io/odin-cv-project",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
