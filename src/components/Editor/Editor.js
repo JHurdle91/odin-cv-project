@@ -5,56 +5,45 @@ import HistorySection from "./History/HistorySection";
 
 import "../../styles/Editor.css";
 
-class Editor extends React.Component {
-  constructor() {
-    super();
-
-    this.addItem = this.addItem.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-    this.handleChangeBio = this.handleChangeBio.bind(this);
-    this.handleChangeHistory = this.handleChangeHistory.bind(this);
-  }
-
-  addItem = (itemsKey) => {
-    this.props.onAddItem(itemsKey);
+const Editor = (props) => {
+  const addItem = (itemsKey) => {
+    props.onAddItem(itemsKey);
   };
 
-  deleteItem = (id, itemsKey) => {
-    this.props.onDeleteItem(id, itemsKey);
+  const deleteItem = (id, itemsKey) => {
+    props.onDeleteItem(id, itemsKey);
   };
 
-  handleChangeBio = (name, value) => {
-    this.props.onTextChangeBio(name, value);
+  const handleChangeBio = (name, value) => {
+    props.onTextChangeBio(name, value);
   };
 
-  handleChangeHistory = (name, value, id, itemsKey) => {
-    this.props.onTextChangeHistory(name, value, id, itemsKey);
+  const handleChangeHistory = (name, value, id, itemsKey) => {
+    props.onTextChangeHistory(name, value, id, itemsKey);
   };
 
-  render() {
-    const { bio, degrees, jobs } = this.props;
-    return (
-      <div className="Editor">
-        <BioEditor bio={bio} onTextChange={this.handleChangeBio} />
-        <HistorySection
-          items={degrees}
-          itemsKey="degrees"
-          header="Education"
-          onAddItem={this.addItem}
-          onDeleteItem={this.deleteItem}
-          onTextChange={this.handleChangeHistory}
-        />
-        <HistorySection
-          items={jobs}
-          itemsKey="jobs"
-          header="Experience"
-          onAddItem={this.addItem}
-          onDeleteItem={this.deleteItem}
-          onTextChange={this.handleChangeHistory}
-        />
-      </div>
-    );
-  }
-}
+  const { bio, degrees, jobs } = props;
+  return (
+    <div className="Editor">
+      <BioEditor bio={bio} onTextChange={handleChangeBio} />
+      <HistorySection
+        items={degrees}
+        itemsKey="degrees"
+        header="Education"
+        onAddItem={addItem}
+        onDeleteItem={deleteItem}
+        onTextChange={handleChangeHistory}
+      />
+      <HistorySection
+        items={jobs}
+        itemsKey="jobs"
+        header="Experience"
+        onAddItem={addItem}
+        onDeleteItem={deleteItem}
+        onTextChange={handleChangeHistory}
+      />
+    </div>
+  );
+};
 
 export default Editor;
