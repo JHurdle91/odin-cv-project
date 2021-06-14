@@ -7,46 +7,35 @@ import Field from "../Field";
 
 const iconDelete = <FontAwesomeIcon icon={faTrash} />;
 
-class HistoryItem extends React.Component {
-  constructor() {
-    super();
-
-    this.handleChange = this.handleChange.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-  }
-
-  handleChange = (name, value) => {
-    const { onTextChange, item } = this.props;
+const HistoryItem = (props) => {
+  const handleChange = (name, value) => {
+    const { onTextChange, item } = props;
     onTextChange(name, value, item.id);
   };
 
-  deleteItem = (e) => {
+  const deleteItem = (e) => {
     e.preventDefault();
-    const { onDeleteItem, item } = this.props;
+    const { onDeleteItem, item } = props;
     onDeleteItem(item.id);
   };
 
-  render() {
-    const { item } = this.props;
+  return (
+    <div className="HistoryItem">
+      {Object.entries(props.item.fields).map((entry) => {
+        const [key, field] = entry;
 
-    return (
-      <div className="HistoryItem">
-        {Object.entries(item.fields).map((entry) => {
-          const [key, field] = entry;
-
-          return (
-            <Field
-              name={key}
-              field={field}
-              key={field.id}
-              onTextChange={this.handleChange}
-            />
-          );
-        })}
-        <button onClick={this.deleteItem}>{iconDelete}</button>
-      </div>
-    );
-  }
-}
+        return (
+          <Field
+            name={key}
+            field={field}
+            key={field.id}
+            onTextChange={handleChange}
+          />
+        );
+      })}
+      <button onClick={deleteItem}>{iconDelete}</button>
+    </div>
+  );
+};
 
 export default HistoryItem;
