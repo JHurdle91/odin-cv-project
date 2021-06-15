@@ -7,12 +7,10 @@ const BioEditor = (props) => {
     props.onTextChange(name, value);
   };
 
-  const { bio } = props;
-
   return (
     <div className="BioEditor">
       <h2>Personal Information</h2>
-      {Object.entries(bio.fields).map((entry) => {
+      {Object.entries(props.bio.fields).map((entry) => {
         const [key, field] = entry;
         return (
           <Field

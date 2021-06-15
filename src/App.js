@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import uniqid from "uniqid";
 
@@ -8,255 +8,230 @@ import Preview from "./components/Preview/Preview";
 
 import "./styles/App.css";
 
-class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      mode: "edit",
-      bio: {
+const App = () => {
+  const [mode, setMode] = useState("edit");
+  const [bio, setBio] = useState({
+    id: uniqid(),
+    fields: {
+      name: {
+        text: "",
+        placeholder: "Name",
         id: uniqid(),
-        fields: {
-          name: {
-            text: "",
-            placeholder: "Name",
-            id: uniqid(),
-          },
-          title: {
-            text: "",
-            placeholder: "Title",
-            id: uniqid(),
-          },
-          city: {
-            text: "",
-            placeholder: "City",
-            id: uniqid(),
-          },
-          email: {
-            text: "",
-            placeholder: "Email Address",
-            id: uniqid(),
-          },
-          phone: {
-            text: "",
-            placeholder: "Phone Number",
-            id: uniqid(),
-          },
-        },
       },
-      degrees: [],
-      degree: {
+      title: {
+        text: "",
+        placeholder: "Title",
         id: uniqid(),
-        fields: {
-          type: {
-            text: "",
-            placeholder: "Degree/Certificate",
-            id: uniqid(),
-          },
-          university: {
-            text: "",
-            placeholder: "University",
-            id: uniqid(),
-          },
-          date: {
-            text: "",
-            placeholder: "Date completed",
-            id: uniqid(),
-          },
-        },
       },
-      jobs: [],
-      job: {
+      city: {
+        text: "",
+        placeholder: "City",
         id: uniqid(),
-        fields: {
-          position: {
-            text: "",
-            placeholder: "Position",
-            id: uniqid(),
-          },
-          company: {
-            text: "",
-            placeholder: "Company",
-            id: uniqid(),
-          },
-          city: {
-            text: "",
-            placeholder: "City",
-            id: uniqid(),
-          },
-          startDate: {
-            text: "",
-            placeholder: "Start Date",
-            id: uniqid(),
-          },
-          endDate: {
-            text: "",
-            placeholder: "End Date",
-            id: uniqid(),
-          },
-        },
       },
-    };
+      email: {
+        text: "",
+        placeholder: "Email Address",
+        id: uniqid(),
+      },
+      phone: {
+        text: "",
+        placeholder: "Phone Number",
+        id: uniqid(),
+      },
+    },
+  });
+  const [degrees, setDegrees] = useState([]);
+  const [jobs, setJobs] = useState([]);
+  const [degree, setDegree] = useState({
+    id: uniqid(),
+    fields: {
+      type: {
+        text: "",
+        placeholder: "Degree/Certificate",
+        id: uniqid(),
+      },
+      university: {
+        text: "",
+        placeholder: "University",
+        id: uniqid(),
+      },
+      date: {
+        text: "",
+        placeholder: "Date completed",
+        id: uniqid(),
+      },
+    },
+  });
+  const [job, setJob] = useState({
+    id: uniqid(),
+    fields: {
+      position: {
+        text: "",
+        placeholder: "Position",
+        id: uniqid(),
+      },
+      company: {
+        text: "",
+        placeholder: "Company",
+        id: uniqid(),
+      },
+      city: {
+        text: "",
+        placeholder: "City",
+        id: uniqid(),
+      },
+      startDate: {
+        text: "",
+        placeholder: "Start Date",
+        id: uniqid(),
+      },
+      endDate: {
+        text: "",
+        placeholder: "End Date",
+        id: uniqid(),
+      },
+    },
+  });
 
-    this.handleChangeBio = this.handleChangeBio.bind(this);
-    this.handleChangeHistory = this.handleChangeHistory.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-    this.addItem = this.addItem.bind(this);
-    this.toggleMode = this.toggleMode.bind(this);
-  }
-
-  addItem = (itemsKey) => {
-    const itemKey = itemsKey.slice(0, -1);
-    const item = this.state[itemKey];
-    const items = this.state[itemsKey];
-
-    this.setState({
-      [itemsKey]: items.concat(item),
-    });
-
-    if (itemKey === "degree") {
-      this.resetDegree();
+  const addItem = (itemsKey) => {
+    if (itemsKey === "degrees") {
+      setDegrees(degrees.concat(degree));
+      resetDegree();
+    } else if (itemsKey === "jobs") {
+      setJobs(jobs.concat(job));
+      resetJob();
     } else {
-      this.resetJob();
+      console.log("Error: App: addItem");
     }
   };
 
-  resetDegree = () => {
-    const { type, university, date } = this.state.degree.fields;
-    this.setState({
-      degree: {
-        id: uniqid(),
-        fields: {
-          type: {
-            text: "",
-            placeholder: type.placeholder,
-            id: uniqid(),
-          },
-          university: {
-            text: "",
-            placeholder: university.placeholder,
-            id: uniqid(),
-          },
-          date: {
-            text: "",
-            placeholder: date.placeholder,
-            id: uniqid(),
-          },
+  const resetDegree = () => {
+    const { type, university, date } = degree.fields;
+    setDegree({
+      id: uniqid(),
+      fields: {
+        type: {
+          text: "",
+          placeholder: type.placeholder,
+          id: uniqid(),
+        },
+        university: {
+          text: "",
+          placeholder: university.placeholder,
+          id: uniqid(),
+        },
+        date: {
+          text: "",
+          placeholder: date.placeholder,
+          id: uniqid(),
         },
       },
     });
   };
 
-  resetJob = () => {
-    const { position, company, city, startDate, endDate } =
-      this.state.job.fields;
-    this.setState({
-      job: {
-        id: uniqid(),
-        fields: {
-          position: {
-            text: "",
-            placeholder: position.placeholder,
-            id: uniqid(),
-          },
-          company: {
-            text: "",
-            placeholder: company.placeholder,
-            id: uniqid(),
-          },
-          city: {
-            text: "",
-            placeholder: city.placeholder,
-            id: uniqid(),
-          },
-          startDate: {
-            text: "",
-            placeholder: startDate.placeholder,
-            id: uniqid(),
-          },
-          endDate: {
-            text: "",
-            placeholder: endDate.placeholder,
-            id: uniqid(),
-          },
+  const resetJob = () => {
+    const { position, company, city, startDate, endDate } = job.fields;
+    setJob({
+      id: uniqid(),
+      fields: {
+        position: {
+          text: "",
+          placeholder: position.placeholder,
+          id: uniqid(),
+        },
+        company: {
+          text: "",
+          placeholder: company.placeholder,
+          id: uniqid(),
+        },
+        city: {
+          text: "",
+          placeholder: city.placeholder,
+          id: uniqid(),
+        },
+        startDate: {
+          text: "",
+          placeholder: startDate.placeholder,
+          id: uniqid(),
+        },
+        endDate: {
+          text: "",
+          placeholder: endDate.placeholder,
+          id: uniqid(),
         },
       },
     });
   };
 
-  handleChangeBio = (name, value) => {
-    const obj = this.state;
-    obj.bio.fields[name].text = value;
-    this.setState(obj);
+  const handleChangeBio = (name, value) => {
+    const item = {};
+    Object.assign(item, bio);
+    item.fields[name].text = value;
+    setBio(item);
   };
 
-  handleChangeHistory = (name, value, id, itemsKey) => {
-    const items = this.state[itemsKey];
-    this.setState({
-      [itemsKey]: items.map((item) => {
-        if (item.id === id) {
-          item.fields[name].text = value;
-        }
-        return item;
-      }),
+  const handleChangeHistory = (name, value, id, itemsKey) => {
+    let items, setItems;
+    if (itemsKey === "degrees") {
+      items = degrees;
+      setItems = setDegrees;
+    } else if (itemsKey === "jobs") {
+      items = jobs;
+      setItems = setJobs;
+    } else {
+      console.log("Error: App: handleChangeHistory");
+    }
+
+    items = items.map((item) => {
+      if (item.id === id) {
+        item.fields[name].text = value;
+      }
+      return item;
     });
+    setItems(items);
   };
 
-  deleteItem = (id, itemsKey) => {
-    const items = this.state[itemsKey];
-    this.setState({
-      [itemsKey]: items.filter((item) => {
+  const deleteItem = (id, itemsKey) => {
+    let items, setItems;
+    if (itemsKey === "degrees") {
+      items = degrees;
+      setItems = setDegrees;
+    } else if (itemsKey === "jobs") {
+      items = jobs;
+      setItems = setJobs;
+    } else {
+      console.log("Error: App: deleteItem");
+    }
+
+    setItems(
+      items.filter((item) => {
         return item.id !== id;
-      }),
-    });
+      })
+    );
   };
 
-  toggleMode = (checked) => {
+  const toggleMode = (checked) => {
     if (checked) {
-      this.setState({
-        mode: "preview",
-      });
+      setMode("preview");
     } else {
-      this.setState({
-        mode: "edit",
-      });
+      setMode("edit");
     }
   };
 
-  exampleCv = () => {
-    this.setState({
-      mode: "edit",
-      bio: {
-        id: uniqid(),
-        fields: {
-          name: {
-            text: "George P. Burdell",
-            placeholder: "Name",
-            id: uniqid(),
-          },
-          title: {
-            text: "Mechanical Engineer",
-            placeholder: "Title",
-            id: uniqid(),
-          },
-          city: {
-            text: "Atlanta",
-            placeholder: "City",
-            id: uniqid(),
-          },
-          email: {
-            text: "GBurdell@gmail.com",
-            placeholder: "Email Address",
-            id: uniqid(),
-          },
-          phone: {
-            text: "404.955.2049",
-            placeholder: "Phone Number",
-            id: uniqid(),
-          },
-        },
-      },
-      degrees: [
+  useEffect(() => {
+    addItem("degrees");
+    addItem("jobs");
+
+    const exampleCv = () => {
+      const { name, title, city, email, phone } = bio.fields;
+      name.text = "George P. Burdell";
+      title.text = "Mechanical Engineer";
+      city.text = "Atlanta";
+      email.text = "GBurdell@gmail.com";
+      phone.text = "404.955.2049";
+      setBio(bio);
+
+      setDegrees([
         {
           id: uniqid(),
           fields: {
@@ -297,8 +272,9 @@ class App extends React.Component {
             },
           },
         },
-      ],
-      jobs: [
+      ]);
+
+      setJobs([
         {
           id: uniqid(),
           fields: {
@@ -359,42 +335,35 @@ class App extends React.Component {
             },
           },
         },
-      ],
-    });
-  };
+      ]);
+    };
 
-  componentDidMount() {
-    this.addItem("degrees");
-    this.addItem("jobs");
-    this.exampleCv();
-  }
+    exampleCv();
+  }, []);
 
-  render() {
-    const { mode, bio, degrees, jobs } = this.state;
-    if (this.state.mode === "edit") {
-      return (
-        <div className="App">
-          <Header mode={mode} onToggle={this.toggleMode} />
-          <Editor
-            bio={bio}
-            degrees={degrees}
-            jobs={jobs}
-            onAddItem={this.addItem}
-            onDeleteItem={this.deleteItem}
-            onTextChangeBio={this.handleChangeBio}
-            onTextChangeHistory={this.handleChangeHistory}
-          />
-        </div>
-      );
-    } else {
-      return (
-        <div className="App">
-          <Header mode={mode} onToggle={this.toggleMode} />
-          <Preview bio={bio} degrees={degrees} jobs={jobs} />
-        </div>
-      );
-    }
+  if (mode === "edit") {
+    return (
+      <div className="App">
+        <Header mode={mode} onToggle={toggleMode} />
+        <Editor
+          bio={bio}
+          degrees={degrees}
+          jobs={jobs}
+          onAddItem={addItem}
+          onDeleteItem={deleteItem}
+          onTextChangeBio={handleChangeBio}
+          onTextChangeHistory={handleChangeHistory}
+        />
+      </div>
+    );
+  } else {
+    return (
+      <div className="App">
+        <Header mode={mode} onToggle={toggleMode} />
+        <Preview bio={bio} degrees={degrees} jobs={jobs} />
+      </div>
+    );
   }
-}
+};
 
 export default App;
